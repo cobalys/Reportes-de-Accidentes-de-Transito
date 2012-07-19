@@ -12,9 +12,7 @@ def index(request):
     html = t.render(RequestContext(request, variables))
     return HttpResponse(html)
 
-
 def get_top(request):
-
     YEAR = {
                        '2006': 2006,
                        '2007': 2007,
@@ -22,31 +20,23 @@ def get_top(request):
                        '2009': 2009,
                        '2010': 2010,
     }
-
     TIPO = {
                        '1': 'FATAL',
                        '2': 'GRAVE',
                        '3': 'LEVE',
     }
-
     cursor = connection.cursor()
-
     cantidad = request.GET.get('cantidad', 15)
     tipo = request.GET.get('tipofilter', None)
     year = request.GET.get('yearfilter', None)
-	
     tipo = str(tipo)
     year = str(year)
-    
     if not YEAR.has_key(year):
-        year = None    
-
+        year = None
     if not TIPO.has_key(tipo):
 	   tipo = None
     else:
 	   tipo = TIPO[tipo]
-
-
     if tipo is not None:
 	    if year is not None:
 		cursor.execute("select nombre_calle, nombre_cruce, count(*) as cantidad, year, latititud, longitude from accidentes_accidente where year = %s and tipo = %s group by calle, cruce having cantidad >= %s order by year desc, cantidad desc;", [year, tipo, cantidad])
@@ -60,14 +50,13 @@ def get_top(request):
 		rows = cursor.fetchall()
 	    else:
 		cursor.execute("select nombre_calle, nombre_cruce, count(*) as cantidad, year, latititud, longitude from accidentes_accidente group by calle, cruce having cantidad >= %s order by year desc, cantidad desc;", [cantidad, ])
-		rows = cursor.fetchall()	
-
-
-    output = "["
+		rows = cursor.fetchall()
+    output = list()
+    output.append("[")
     for row in rows:
-		output += "['Aqui hubo " + unicode(row[2]) + " Accidentes.', " + unicode(row[4]) + ", " + unicode(row[5]) + "],"
-    output += "];"
-    return HttpResponse(output)
+		output.append("['Aqui hubo %s Accidentes.', %s, %s],"% (unicode(row[2]),unicode(row[4]),unicode(row[5]),))
+    output.append("];")
+    return HttpResponse("".join(output))
 
 
 def about(request):
