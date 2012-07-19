@@ -1,0 +1,73 @@
+# -*- coding: utf-8 -*-
+import django
+import os
+
+PROJECT_PATH = os.path.abspath(os.path.dirname(__file__))
+PROJECT_PARENT_PATH = os.path.abspath(os.path.join(PROJECT_PATH, "../../.."))
+
+
+DEBUG = False
+TEMPLATE_DEBUG = DEBUG
+
+ADMINS = (
+    # ('Your Name', 'your_email@domain.com'),
+)
+
+MANAGERS = ADMINS
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'accidentes',                
+        'USER': 'dal',        
+        'PASSWORD': 'desarrolla',               
+        'HOST': '',                  
+        'PORT': '',
+    }
+}
+
+ROOT_URLCONF = 'reporteaccidentes.urls'
+TIME_ZONE = 'America/Montevideo'
+LANGUAGE_CODE = 'es'
+SITE_ID = 1
+USE_I18N = False
+USE_L10N = False
+
+if django.VERSION[1] > 2:
+    STATIC_URL = "/reporteaccidentes/static/"
+    STATICFILES_DIRS = (
+        os.path.join(PROJECT_PARENT_PATH, 'static/'),
+    )
+    MEDIA_ROOT = os.path.join(PROJECT_PARENT_PATH, 'media/')
+    MEDIA_URL = '/media/'
+    STATIC_DOC_ROOT = '/var/www/reporteaccidentes/static/'
+else:
+    MEDIA_ROOT = os.path.join(PROJECT_PARENT_PATH, 'static/')
+    MEDIA_URL = '/media/'
+    ADMIN_MEDIA_PREFIX = '/media/admin'
+
+TEMPLATE_DIRS = (
+      os.path.join(PROJECT_PATH, 'templates/'),
+)
+
+TEMPLATE_LOADERS = (
+    'django.template.loaders.filesystem.Loader',
+    'django.template.loaders.app_directories.Loader',
+)
+
+MIDDLEWARE_CLASSES = (
+    'django.middleware.common.CommonMiddleware',
+    'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.contrib.messages.middleware.MessageMiddleware',
+)
+
+INSTALLED_APPS = (
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.sites',
+    'django.contrib.messages',
+    'reporteaccidentes.accidentes'
+)
