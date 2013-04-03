@@ -4,6 +4,6 @@ media/images/cobalys.png
 .settings
 .pydevproject
 .project
-.pyc
+*.pyc
 *~
 .directory
