@@ -1,0 +1,23 @@
+import os
+PROJECT_PATH = os.path.abspath(os.path.dirname(__file__))
+PROJECT_PARENT_PATH = os.path.abspath(os.path.join(PROJECT_PATH, "../.."))
+
+DEBUG = True
+ADMINS = (
+    # ('Your Name', 'your_email@domain.com'),
+)
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.',
+        'NAME': '',
+        'USER': '',
+        'PASSWORD': '',
+        'HOST': '',
+        'PORT': '',
+    }
+}
+STATICFILES_DIRS = (
+    os.path.join(PROJECT_PARENT_PATH, 'static/'),
+)
+MEDIA_ROOT = os.path.join(PROJECT_PARENT_PATH, 'static/')
+STATIC_ROOT = ''

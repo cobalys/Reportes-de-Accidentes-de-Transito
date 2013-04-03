@@ -1,3 +1,6 @@
-reporteaccidentes/reporteaccidentes/settings.py
+reporteaccidentes/reporteaccidentes/settings_local.py
 media/images/cobalys.gif
 media/images/cobalys.png
+.settings
+.pydevproject
+.project

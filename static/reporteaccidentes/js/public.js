@@ -1,4 +1,14 @@
 var map;
+$(document).ready(function($) {
+	$("#minaccidentnum").spinner({
+		min : 10,
+		max : 500,
+		increment : 1
+	});
+	$('#minaccidentnum').val(10);
+	$('#tipofilter').val('todo');
+	$('#yearfilter').val('todo');
+});
 
 function initialize() {
 	var myLatlng = new google.maps.LatLng(-34.905833, -56.191389);
@@ -9,8 +19,8 @@ function initialize() {
 	}
 	map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
 	var parameters = {};
-	parameters["cantidad"] = 40
-	$.get('/update.ajax', parameters, function(data) {
+	parameters["cantidad"] = 10
+	$.get('update.ajax', parameters, function(data) {
 		clear();
 		var locations = eval(data)
 		for( i = 0; i < locations.length; i++) {
@@ -36,11 +46,11 @@ function clear() {
 
 function actualizar() {
 	var parameters = {};
-	if(parseInt($('#minaccidentnum').val()) > 0) {
+	if(parseInt($('#minaccidentnum').val()) > 10) {
 		parameters["cantidad"] = $('#minaccidentnum').val();
 	} else {
-		parameters["cantidad"] = 40;
-		$('#minaccidentnum').val(40);
+		parameters["cantidad"] = 10;
+		$('#minaccidentnum').val(10);
 	}
 	parameters["yearfilter"] = $('#yearfilter').val();
 	if(parseInt($('#tipofilter').val()) > 0) {
@@ -49,7 +59,7 @@ function actualizar() {
 		parameters["tipofilter"] = 'todo'
 		$('#tipofilter').val('todo')
 	}
-	$.get('/update.ajax', parameters, function(data) {
+	$.get('update.ajax', parameters, function(data) {
 		clear();
 		var locations = eval(data)
 		for( i = 0; i < locations.length; i++) {
@@ -79,17 +89,10 @@ function ranking() {
 	});
 }
 
-$(document).ready(function($) {
-	$("#minaccidentnum").spinner({
-		min : 1,
-		max : 500,
-		increment : 2
-	});
-});
 
 function getRanking() {
 	var output = "<table>"
-	$.get('/ranking.ajax', function(data) {
+	$.get('ranking.ajax', function(data) {
 		clear();
 		var locations = eval(data)
 		for( i = 0; i < locations.length; i++) {
